@@ -7,9 +7,13 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
 
-contract RugPullToken is ERC20, ERC20Burnable, ERC20Permit, ERC20Votes {
-    constructor() ERC20("RugPull", "RUG") ERC20Permit("RugPull") {
-        _mint(msg.sender, 1000000000 * 10 ** decimals());
+contract LaunchToken is ERC20, ERC20Burnable, ERC20Permit, ERC20Votes {
+    constructor(
+        string memory name,
+        string memory symbol,
+        uint256 initialSupply
+    ) ERC20(name, symbol) ERC20Permit(name) {
+        _mint(msg.sender, initialSupply * 10 ** decimals());
     }
 
     // The following functions are overrides required by Solidity.
