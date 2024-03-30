@@ -15,6 +15,7 @@ import {
 } from "./ui/dropdown-menu";
 import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from "wagmi";
 import Image from "next/image";
+import { ConnectButton } from "./connect-button";
 
 export default function Header() {
   const { address } = useAccount();
@@ -110,9 +111,7 @@ export default function Header() {
         </SheetContent>
       </Sheet>
       <div className="flex w-full items-center justify-end gap-4 md:ml-auto md:gap-2 lg:gap-4">
-        {ensAvatar && <Image alt="ENS Avatar" src={ensAvatar} />}
-        {address && <div>{ensName ? `${ensName} (${address})` : address}</div>}
-        <button onClick={() => disconnect()}>Disconnect</button>
+        <ConnectButton />
       </div>
     </header>
   );
