@@ -3,43 +3,60 @@
 import { useConfig } from "@/hooks/use-config";
 import { themes } from "@/registry/themes";
 import { useTheme } from "next-themes";
+import React from "react";
 import {
-  Line,
   LineChart,
-  ResponsiveContainer,
-  Tooltip,
+  Line,
   XAxis,
   YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
 } from "recharts";
 
 const data = [
   {
-    average: 400,
-    today: 240,
+    name: "Page A",
+    uv: 4000,
+    pv: 2400,
+    amt: 2400,
   },
   {
-    average: 300,
-    today: 139,
+    name: "Page B",
+    uv: 3000,
+    pv: 1398,
+    amt: 2210,
   },
   {
-    average: 200,
-    today: 980,
+    name: "Page C",
+    uv: 2000,
+    pv: 9800,
+    amt: 2290,
   },
   {
-    average: 278,
-    today: 390,
+    name: "Page D",
+    uv: 2780,
+    pv: 3908,
+    amt: 2000,
   },
   {
-    average: 189,
-    today: 480,
+    name: "Page E",
+    uv: 1890,
+    pv: 4800,
+    amt: 2181,
   },
   {
-    average: 239,
-    today: 380,
+    name: "Page F",
+    uv: 2390,
+    pv: 3800,
+    amt: 2500,
   },
   {
-    average: 349,
-    today: 430,
+    name: "Page G",
+    uv: 3490,
+    pv: 4300,
+    amt: 2100,
   },
 ];
 
@@ -52,77 +69,28 @@ export function LineChartContainer() {
   return (
     <ResponsiveContainer width="100%" height="100%">
       <LineChart
+        width={500}
+        height={300}
         data={data}
         margin={{
           top: 5,
-          right: 10,
-          left: 10,
-          bottom: 0,
+          right: 30,
+          left: 20,
+          bottom: 5,
         }}
       >
-        <Tooltip
-          content={({ active, payload }) => {
-            if (active && payload && payload.length) {
-              return (
-                <div className="rounded-lg border bg-background p-2 shadow-sm">
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="flex flex-col">
-                      <span className="text-[0.70rem] uppercase text-muted-foreground">
-                        Average
-                      </span>
-                      <span className="font-bold text-muted-foreground">
-                        {payload[0].value}
-                      </span>
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="text-[0.70rem] uppercase text-muted-foreground">
-                        Today
-                      </span>
-                      <span className="font-bold">{payload[1].value}</span>
-                    </div>
-                  </div>
-                </div>
-              );
-            }
-
-            return null;
-          }}
-        />
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
         <Line
           type="monotone"
-          strokeWidth={2}
-          dataKey="average"
-          activeDot={{
-            r: 6,
-            style: { fill: "var(--theme-primary)", opacity: 0.25 },
-          }}
-          style={
-            {
-              stroke: "var(--theme-primary)",
-              opacity: 0.25,
-              "--theme-primary": `hsl(${
-                theme?.cssVars[mode === "dark" ? "dark" : "light"].primary
-              })`,
-            } as React.CSSProperties
-          }
+          dataKey="pv"
+          stroke="#8884d8"
+          activeDot={{ r: 8 }}
         />
-        <Line
-          type="monotone"
-          dataKey="today"
-          strokeWidth={2}
-          activeDot={{
-            r: 8,
-            style: { fill: "var(--theme-primary)" },
-          }}
-          style={
-            {
-              stroke: "var(--theme-primary)",
-              "--theme-primary": `hsl(${
-                theme?.cssVars[mode === "dark" ? "dark" : "light"].primary
-              })`,
-            } as React.CSSProperties
-          }
-        />
+        <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
       </LineChart>
     </ResponsiveContainer>
   );
