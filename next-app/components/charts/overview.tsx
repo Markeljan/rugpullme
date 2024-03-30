@@ -62,10 +62,10 @@ import {
 // ];
 
 const today = new Date();
-const data = Array.from({ length: 7 }, (_, index) => {
+const data = Array.from({ length: 6 }, (_, index) => {
   const date = new Date(today);
-  date.setDate(today.getDate() - 6 + index); // Generate dates for the past week
-  const formattedDate = `${date.getMonth() + 1}/${date.getDate()}`; // Format date as M/D
+  date.setHours(today.getHours() - 5 + index); // Generate dates for the past 6 hours
+  const formattedDate = `${date.getHours()}:00`; // Format date as HH:00
   return {
     name: formattedDate, // Update to include formatted date
     total: Math.floor(Math.random() * 1000) + 1000 * (index + 1), // Generate increasing values

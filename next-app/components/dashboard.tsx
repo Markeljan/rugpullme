@@ -39,6 +39,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Terminal } from "lucide-react";
+
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 import { Overview } from "@/components/charts/overview";
 import { LineChartContainer } from "./charts/line-chart";
@@ -105,6 +108,33 @@ export default function Dashboard() {
         </div> */}
         <div>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+            <Alert className="col-span-8">
+              <Terminal className="h-4 w-4" />
+              <AlertTitle>What is RugPullMe.xyz?</AlertTitle>
+              <AlertDescription>
+                Bonding Curve Token with a 0.01% chance to rug pull on every
+                transaction! At $5,000 market cap, the rugpull mechnism will be
+                deactivated and 50% of the supply will be locked in a DEX
+                liquidity pool. All rug funds automatically buyback and burn the
+                RugPullMe token, held by the community.
+              </AlertDescription>
+              <AlertDescription className="flex justify-end gap-4 pt-2">
+                <Link
+                  className="text-blue-500 underline"
+                  href="https://bafybeifoh4egipfyuonpsbxq7f64olvd5icp6fj4jfjkuzy6fbbjxfrqyy.ipfs.nftstorage.link/"
+                  target="_blank"
+                >
+                  BondingCurveToken.sol
+                </Link>
+                <Link
+                  className="text-blue-500 underline"
+                  href="https://holesky.etherscan.io/address/0x19e9ff54f9b671eb02cadf8888d19015a9aac0d9"
+                  target="_blank"
+                >
+                  Explorer URL
+                </Link>
+              </AlertDescription>
+            </Alert>
             <Card className="col-span-8">
               <CardHeader>
                 <CardTitle>$RPM</CardTitle>
