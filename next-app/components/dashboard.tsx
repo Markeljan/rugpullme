@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import {
   Activity,
@@ -14,13 +16,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,14 +27,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Terminal } from "lucide-react";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -46,8 +35,34 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Overview } from "@/components/charts/overview";
 import { LineChartContainer } from "./charts/line-chart";
 import Header from "./header";
+import { useWriteContract } from "wagmi";
+import { mantleSepolia } from "@/app/wallet-provider";
+import { parseEther, parseUnits } from "viem";
+import { CONTRACT_ABI } from "./wallet-options";
 
 export default function Dashboard() {
+  const { writeContractAsync } = useWriteContract();
+
+  const handleBuy = async () => {
+    await writeContractAsync({
+      chainId: mantleSepolia.id,
+      address: "0x16eb369a168e4d2f990abf32ca4d7207c775c387",
+      functionName: "buyTokens",
+      value: parseEther("1"),
+      abi: CONTRACT_ABI,
+    });
+  };
+
+  const handleSell = async () => {
+    await writeContractAsync({
+      chainId: mantleSepolia.id,
+      address: "0x16eb369a168e4d2f990abf32ca4d7207c775c387",
+      functionName: "sellTokens",
+      args: [parseUnits("1", 1)],
+      abi: CONTRACT_ABI,
+    });
+  };
+
   return (
     <div className="flex min-h-screen w-full flex-col">
       <Header />
@@ -112,12 +127,19 @@ export default function Dashboard() {
               <Terminal className="h-4 w-4" />
               <AlertTitle>What is RugPullMe.xyz?</AlertTitle>
               <AlertDescription>
-                Bonding Curve Token with a 0.01% chance to rug pull on every
-                transaction! At $5,000 market cap, the rugpull mechnism will be
-                deactivated and 50% of the supply will be locked in a DEX
-                liquidity pool. All rug funds automatically buyback and burn the
-                RugPullMe token, held by the community.
+                Bonding Curve Token with a 0.01% chance to rug pull on every transaction! At $5,000 market cap, the
+                rugpull mechnism will be deactivated and 50% of the supply will be locked in a DEX liquidity pool. All
+                rug funds automatically buyback and burn the RugPullMe token, held by the community.
               </AlertDescription>
+              <AlertDescription className="flex gap-4">
+              <Button className="mt-6" onClick={handleBuy}>
+                Buy current $RUGTOKEN (1/100 chance to get rugged!)
+              </Button>
+              <Button className="mt-6" onClick={handleSell}>
+                Sell current $RUGTOKEN (1/100 chance to get rugged!)
+              </Button>
+              </AlertDescription>
+
               <AlertDescription className="flex justify-end gap-4 pt-2">
                 <Link
                   className="text-blue-500 underline"
